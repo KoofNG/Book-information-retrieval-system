@@ -18,13 +18,13 @@ div#footer{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: #fafafa;
+    background-color: green;
 }
 div#footer>p{
     padding: 7.5px 0;
     margin: 0;
     font-size: 14px;
     font-weight: bold;
-    color: #121212;
+    color: #ffffff;
 }
 </style>
