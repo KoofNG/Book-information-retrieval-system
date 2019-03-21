@@ -5,6 +5,16 @@
 </template>
 
 <style>
+*{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+html, body{
+  padding: 0;
+  margin: 0;
+  font-family: "Google Sans", sans-serif;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
