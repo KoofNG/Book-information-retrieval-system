@@ -1,12 +1,15 @@
 <template>
   <div>
     <Navigation/>
+    <Login v-if="isLogged"/>
     <div class="searchBox">
       <div class="content">
         <p>Find a book</p>
         <div class="questionRow">
-          <input type="text" name id placeholder="eg: Control Engineering">
-          <button type="submit">Search</button>
+          <form action="" method="post">            
+            <input type="text" name id placeholder="eg: Control Engineering">
+            <button type="submit" @click="showLogin">Search</button>
+          </form>
         </div>
       </div>
     </div>
@@ -64,12 +67,15 @@
 
 <script>
 import Navigation from "@/components/Navigation.vue";
+import Login from '@/components/Login.vue';
 import BookCard from "@/components/BookCard.vue";
 import Footer from "@/components/Footer.vue";
+
 
 export default {
   components: {
     Navigation,
+    Login,
     BookCard,
     Footer
   },
@@ -77,8 +83,17 @@ export default {
   data() {
     return {
       sciences: 4,
+      isLogged: false,
     };
-  }
+  },
+
+  methods: {
+    showLogin: function (event) {
+      console.log('event');
+      event.preventDefault();
+      this.isLogged = !this.isLogged;
+    },
+  },
 };
 </script>
 
@@ -103,7 +118,7 @@ div.content {
   -webkit-transform: translateY(-50%);
   padding: 5px 0;
 }
-div.questionRow {
+div.questionRow>form {
   height: 40px;
   width: 100%;
   display: flex;
@@ -143,20 +158,22 @@ div.content > p {
   margin: 0px;
   padding: 12.5px 0;
 }
-div.questionRow > input {
+div.questionRow >form > input {
   width: 80%;
   border-radius: 20px 0 0 20px;
   outline: none;
   border: none;
   padding: 5px 15px;
+  transition: all 300ms;
 }
-div.questionRow > button {
+div.questionRow >form > button {
   width: 20%;
   border-radius: 0 20px 20px 0px;
   outline: none;
   border: none;
   font-size: 16px;
   font-weight: 400;
+  cursor: pointer;
 }
 div.row-title {
   display: flex;
