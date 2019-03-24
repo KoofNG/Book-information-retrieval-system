@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <p>View Requested book</p>
     </div>
 </template>
 

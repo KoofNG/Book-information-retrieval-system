@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <p>Delete a book</p>
     </div>
 </template>
 

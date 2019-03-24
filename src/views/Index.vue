@@ -1,19 +1,26 @@
 <template>
   <div>
+    <!-- Navigation Component -->
     <Navigation/>
+
+    <!-- If i am not logged in, should show the login dialog box -->
     <Login v-if="isLogged"/>
+    <!-- this is the component or div for the search of books -->
     <div class="searchBox">
       <div class="content">
         <p>Find a book</p>
         <div class="questionRow">
-          <form action="" method="post">            
+          <form action method="post">
             <input type="text" name id placeholder="eg: Control Engineering">
             <button type="submit" @click="showLogin">Search</button>
           </form>
         </div>
       </div>
     </div>
+
+    <!-- this columns shows the random book picked from the database in the various categories -->
     <div class="randomBooks">
+      <!-- Sciences -->
       <div class="sciences">
         <div class="row-title">
           <p>sciences</p>
@@ -25,11 +32,12 @@
             <span>&#9733;</span>
           </span>
         </div>
-
         <div class="book-cards">
-            <BookCard v-for="(item, index) in this.sciences" :key="index" />
+          <!-- used a loop to display the various books -->
+          <BookCard v-for="(item, index) in this.sciences" :key="index"/>
         </div>
       </div>
+      <!-- Art -->
       <div class="art">
         <div class="row-title">
           <p>arts</p>
@@ -45,6 +53,7 @@
           <BookCard v-for="(item, index) in this.sciences" :key="index"/>
         </div>
       </div>
+      <!-- Business -->
       <div class="business">
         <div class="row-title">
           <p>business</p>
@@ -67,10 +76,9 @@
 
 <script>
 import Navigation from "@/components/Navigation.vue";
-import Login from '@/components/Login.vue';
+import Login from "@/components/Login.vue";
 import BookCard from "@/components/BookCard.vue";
 import Footer from "@/components/Footer.vue";
-
 
 export default {
   components: {
@@ -83,17 +91,43 @@ export default {
   data() {
     return {
       sciences: 4,
-      isLogged: false,
+      // sciences: [
+      //   {
+      //     imgSrc: "https://www.fb.com/gfg",
+      //     bookTitle: "Control Engineering",
+      //     bookAUthor: "Myseklf",
+      //     pubYear: 1334
+      //   },
+      //   {
+      //     imgSrc: "https://www.fb.com/gfg",
+      //     bookTitle: "Control Engineering",
+      //     bookAUthor: "Myseklf",
+      //     pubYear: 1334
+      //   },
+      //   {
+      //     imgSrc: "https://www.fb.com/gfg",
+      //     bookTitle: "Control Engineering",
+      //     bookAUthor: "Myseklf",
+      //     pubYear: 1334
+      //   },
+      //   {
+      //     imgSrc: "https://www.fb.com/gfg",
+      //     bookTitle: "Control Engineering",
+      //     bookAUthor: "Myseklf",
+      //     pubYear: 1334
+      //   }
+      // ],
+      isLogged: false
     };
   },
 
   methods: {
-    showLogin: function (event) {
-      console.log('event');
+    showLogin: function(event) {
+      console.log("event");
       event.preventDefault();
       this.isLogged = !this.isLogged;
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -118,7 +152,7 @@ div.content {
   -webkit-transform: translateY(-50%);
   padding: 5px 0;
 }
-div.questionRow>form {
+div.questionRow > form {
   height: 40px;
   width: 100%;
   display: flex;
@@ -158,7 +192,7 @@ div.content > p {
   margin: 0px;
   padding: 12.5px 0;
 }
-div.questionRow >form > input {
+div.questionRow > form > input {
   width: 80%;
   border-radius: 20px 0 0 20px;
   outline: none;
@@ -166,7 +200,7 @@ div.questionRow >form > input {
   padding: 5px 15px;
   transition: all 300ms;
 }
-div.questionRow >form > button {
+div.questionRow > form > button {
   width: 20%;
   border-radius: 0 20px 20px 0px;
   outline: none;

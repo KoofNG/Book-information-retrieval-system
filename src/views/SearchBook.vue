@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <p>Search for a book</p>
     </div>
 </template>
 

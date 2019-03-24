@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <p>Update Book Record</p>
     </div>
 </template>
 

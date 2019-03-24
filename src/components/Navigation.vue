@@ -1,7 +1,12 @@
 <template>
   <div id="navigation" class="pad-top-bottom">
     <div class="brandName">
-      <h1>Book Information Retrieval System</h1>
+      <h1>Book Information Retrieval</h1>
+    </div>
+    <div>
+      <ul>
+        <!-- <li><a href="createBook">Create Book</a></li> -->
+      </ul>
     </div>
     <div class="accounts">
       <a href=''>Login</a>
@@ -10,11 +15,18 @@
 </template>
 
 <script>
+
+// import CreateBook from './views/CreateBook.vue';
+
+
 export default {
   data() {
     return {
     }
   },
+  // components: {
+  //   CreateBook,
+  // },
   methods: {
     // showLogin: function(event) {
     //   event.preventDefault();
