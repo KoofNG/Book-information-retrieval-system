@@ -75,17 +75,17 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
-import Login from "@/components/Login.vue";
-import BookCard from "@/components/BookCard.vue";
-import Footer from "@/components/Footer.vue";
+import Navigation from '@/components/Navigation.vue';
+import Login from '@/components/Login.vue';
+import BookCard from '@/components/BookCard.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   components: {
     Navigation,
     Login,
     BookCard,
-    Footer
+    Footer,
   },
 
   data() {
@@ -117,17 +117,17 @@ export default {
       //     pubYear: 1334
       //   }
       // ],
-      isLogged: false
+      isLogged: false,
     };
   },
 
   methods: {
-    showLogin: function(event) {
-      console.log("event");
+    showLogin(event) {
+      // console.log('event');
       event.preventDefault();
       this.isLogged = !this.isLogged;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -165,6 +165,7 @@ div.randomBooks {
   position: relative;
   padding: 40px 50px;
   background-color: #fafafa;
+  margin-bottom: 55px;
 }
 div.randomBooks > div:nth-child(2) {
   margin: 10px 0;
