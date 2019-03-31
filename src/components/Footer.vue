@@ -6,8 +6,8 @@
 
 <script>
 export default {
-    
-}
+
+};
 </script>
 
 <style scoped>
@@ -19,6 +19,8 @@ div#footer{
     flex-direction: row;
     justify-content: center;
     background-color: green;
+    position: sticky;
+    bottom: 0px;
 }
 div#footer>p{
     padding: 7.5px 0;
