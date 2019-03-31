@@ -2,10 +2,14 @@
   <div id="navigation" class="pad-top-bottom">
     <div class="brandName">
       <h1>Book Information Retrieval</h1>
+      <!--  -->
     </div>
-    <div>
+    <div class='links'>
       <ul>
-        <!-- <li><a href="createBook">Create Book</a></li> -->
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/createBook">Create Book</router-link></li>
+        <li><router-link to="/updateBook">Update Book</router-link></li>
+        <li><router-link to="/deleteBook">Delete Book</router-link></li>
       </ul>
     </div>
     <div class="accounts">
@@ -22,7 +26,7 @@
 export default {
   data() {
     return {
-    }
+    };
   },
   // components: {
   //   CreateBook,
@@ -30,14 +34,30 @@ export default {
   methods: {
     // showLogin: function(event) {
     //   event.preventDefault();
-    //   // this.isLogged = true;      
+    //   // this.isLogged = true;
     // }
-  }
+  },
 };
 </script>
 
 
 <style>
+div.links{
+  display: block;
+  position: relative;
+  width: auto;
+}
+div.links >ul li {
+  list-style: none;
+}
+div.links >ul>li {
+  float: left;
+  margin: 0 10px;
+  text-decoration: none;
+}
+div.links >ul>li>a{
+  text-decoration: none;
+}
 /* Block */
 div#navigation {
   display: flex;
