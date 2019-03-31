@@ -10,6 +10,20 @@ import SearchBook from './views/SearchBook.vue';
 import UpdateBook from './views/UpdateBook.vue';
 import ViewRequestedBook from './views/ViewRequestedBook.vue';
 
+
+// const Vue = require('vue');
+// const Router = require('vue-router');
+
+// // Importing the various pages
+// const Index = require('./views/Index.vue');
+// const CreateBook = require('./views/CreateBook.vue');
+// const DeleteBook = require('./views/DeleteBook.vue');
+// const RequestedBook = require('./views/RequestBook.vue');
+// const SearchBook = require('./views/SearchBook.vue');
+// const UpdateBook = require('./views/UpdateBook.vue');
+// const ViewRequestedBook = require('./views/ViewRequestedBook.vue');
+
+
 Vue.use(Router);
 
 export default new Router({
@@ -36,7 +50,7 @@ export default new Router({
     },
     {
       path: '/search',
-      name: 'seaarch',
+      name: 'search',
       component: SearchBook,
     },
     {

@@ -26,6 +26,14 @@ html, body{
   padding: 30px;
 }
 
+::placeholder{
+  color: #cccccc
+}
+
+input {
+  text-transform: capitalize;
+}
+
 #nav a {
   font-weight: bold;
   color: #2c3e50;
