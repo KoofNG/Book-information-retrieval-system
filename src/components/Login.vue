@@ -64,7 +64,7 @@ div#login input[type="password"] {
 div#login input[type="text"]:focus,
 div#login input[type="password"]:focus{
     border: 1px solid green;
-} 
+}
 input[type=submit]{
     background-color: green;
     color: #ffffff;
@@ -73,4 +73,3 @@ input[type=submit]{
     border-radius: 4px;
 }
 </style>
-
