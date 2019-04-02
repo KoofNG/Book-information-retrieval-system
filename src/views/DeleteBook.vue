@@ -69,11 +69,12 @@
 
 import Navigation from '@/components/Navigation.vue';
 import Footer from '@/components/Footer.vue';
+
 export default {
-    components: {
-        Navigation,
-        Footer
-    },
+  components: {
+    Navigation,
+    Footer,
+  },
 
 };
 </script>
@@ -101,7 +102,7 @@ div#search-form > form > div {
     width: auto;
     height: auto;
 }
-div#search-form > form > h3 {    
+div#search-form > form > h3 {
     font-weight: lighter;
     font-size: 1.3em;
     color: green;
@@ -156,7 +157,7 @@ div#search-result {
     display: block;
     text-align: left;
 }
-div#search-result > h3 {   
+div#search-result > h3 {
     font-weight: lighter;
     font-size: 1.3em;
     color: green;
