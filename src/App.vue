@@ -27,7 +27,10 @@ html, body{
 }
 
 ::placeholder{
-  color: #cccccc
+  color: #cccccc;
+}
+input[type='email']::placeholder {
+  text-transform: capitalize !important;
 }
 
 input {
