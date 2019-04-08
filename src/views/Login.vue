@@ -1,0 +1,326 @@
+<template>
+  <div>
+    <div id="navigation" class="navigation-color">
+      <div class="brandName">
+        <a href="/">Book Information Retrieval System</a>
+      </div>
+    </div>
+
+    <div id="forms">
+      <div class="links">
+        <div>
+          <p id="login" class="active">Login</p>
+        </div>
+        <div>
+          <p id="signup">Sign up</p>
+        </div>
+      </div>
+      <div class="user-forms">
+        <Loader v-if="authenticating"/>
+        <div id="login" class="active">
+          <h1>Login</h1>
+          <form name="login" v-on:submit.prevent>
+            <div>
+              <input type="email"
+                name id="logemail"
+                placeholder="Email Address"
+                v-model="logEmail">
+            </div>
+            <div>
+              <input
+                type="password"
+                id="logpassword"
+                placeholder="Password"
+                v-model="logPassword"
+              >
+            </div>
+            <div>
+              <input type="submit" value="Login" @click="login">
+            </div>
+          </form>
+        </div>
+        <div id="signup">
+          <h1>Sign up</h1>
+          <form name="register" v-on:submit.prevent>
+            <div>
+              <input
+                type="email"
+                name id="email"
+                placeholder="Email Address"
+                v-model="regEmail">
+            </div>
+            <div>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                v-model="regPassword"
+              >
+            </div>
+            <div>
+              <select name="category" id v-model="regCategory">
+                <option value="0" disabled>Choose User Category</option>
+                <option value="student">Student</option>
+                <option value="staff">Staff</option>
+              </select>
+            </div>
+            <div>
+              <input type="submit" value="Register" @click="signup">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="footer" class="footer-color">
+      <h6>
+        Made with
+        <span>&#10084;</span> by
+        <a href="http://">KoofNG</a>
+      </h6>
+    </div>
+  </div>
+</template>
+
+<script>
+import Loader from '@/components/Loader.vue';
+export default {
+  components: {
+    Loader,
+  },
+
+  data() {
+    return {
+      logEmail: '',
+      logPassword: '',
+      regEmail: '',
+      regPassword: '',
+      regCategory: '',
+      authenticating: false,
+    };
+  },
+
+  mounted() {
+    const chooseForm = document.querySelectorAll('div.links div p');
+    for (let index = 0; index < chooseForm.length; index++) {
+      const element = chooseForm[index];
+      element.addEventListener('click', (e) => {
+        const activeLink = document.querySelector('p.active');
+        activeLink.classList.remove('active');
+        // if (activeLink) {
+        // }
+        element.classList.add('active');
+        const route = e.target.id;
+        const currentActive = document.querySelector('div.user-forms div.active');
+        currentActive.classList.remove('active');
+        document.querySelector(`div#${route}`).classList.add('active');
+
+
+        // if (currentActive) {
+        // }
+        // function showForm(x) {
+        // }
+        // setTimeout(showForm(route), 200);        
+      });
+    }
+  },
+
+  methods: {
+    login() {
+      this.authenticating = true;
+      if (this.logEmail != '' && this.logPassword != '') {
+          this.$router.push('/Home');
+      } else {
+      }
+    },
+
+    signup() {
+      if (this.regEmail != '' && this.regPassword != '' && this.regCategory != '') {          
+          this.$router.push('/Home');
+      } else {
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Block */
+div#navigation {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: left;
+  padding: 20px 50px;
+  margin: 0px;
+}
+div#forms {
+  position: absolute;
+  display: block;
+  top: 35%;
+  transform: translateY(-35%);
+  right: 50px;
+  width: 450px;
+  height: auto;
+  -webkit-box-shadow: 0 0 15px rgba(99, 114, 130, 0.3);
+  box-shadow: 0 0 15px rgba(99, 114, 130, 0.3);
+}
+div.links {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+div#footer {
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: absolute;
+  bottom: 0;
+}
+div.brandName {
+  display: block;
+  position: relative;
+  height: 40px;
+  width: auto;
+  padding: 6.5px 0;
+}
+div.user-forms {
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  position: relative;
+  transition: height 0.2s;
+}
+div.user-forms > div.active {
+  display: block !important ;
+}
+div#login,
+div#signup {
+  width: 100%;
+  height: auto;
+  display: none;
+  position: relative;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 6px 10px rgba(99, 114, 130, 0.3);
+  box-shadow: 0 6px 10px rgba(99, 114, 130, 0.3);
+  padding: 20px;
+  z-index: 2;
+}
+div#login input,
+div#signup input,
+div#signup select {
+  width: 100%;
+  height: 40px;
+  display: block;
+  position: relative;
+  outline: none;
+  border: none;
+}
+
+/* Element */
+div.brandName a {
+  text-decoration: none;
+  color: #008000;
+  font-size: 22px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+div.links div {
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+div.links div p {
+  width: 100%;
+  min-height: 100%;
+  cursor: pointer;
+  display: block;
+  margin: 0px;
+  padding: 15px 0;
+  font-size: 17px;
+  font-weight: 400;
+  border-bottom: 1px solid #008000;
+  transition: all 0.2s;
+}
+div#login > h1,
+div#signup > h1 {
+  margin: 0;
+  padding: 10px 0px;
+  text-align: left;
+  font-weight: lighter;
+  font-size: 25px;
+}
+div#login input:nth-child(odd),
+div#signup input:nth-child(odd) {
+  margin: 0.2rem 0px;
+}
+div#footer h6 {
+  font-size: 18px;
+  font-weight: lighter;
+  padding: 20px 0px;
+  margin: 0px;
+  color: #ffffff;
+  position: relative;
+  display: block;
+}
+div#footer h6 span {
+  color: indianred;
+}
+div#footer h6 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Modifiers */
+.navigation-color {
+  background-color: #ffffff;
+  border-bottom: 1.5px solid #008000;
+}
+div.links div p.active {
+  background-color: #008000;
+  color: #ffffff;
+}
+div#login input[type="text"],
+div#login input[type="password"],
+div#login input[type="email"],
+div#signup input[type="text"],
+div#signup input[type="password"],
+div#signup input[type="email"],
+div#signup select {
+  border: 1px solid #cccccc;
+  padding: 7.5px 10px;
+  border-radius: 4px;
+  transition: all 300ms;
+  outline: none;
+}
+div#login input[type="text"]:focus,
+div#login input[type="password"]:focus,
+div#login input[type="email"]:focus,
+div#signup input[type="text"]:focus,
+div#signup input[type="password"]:focus,
+div#signup input[type="email"]:focus,
+div#signup select:focus {
+  border: 1px solid green;
+}
+input[type="submit"] {
+  background-color: green;
+  color: #ffffff;
+  cursor: pointer;
+  margin: 15px 0px !important;
+  border-radius: 4px;
+}
+input[type="email"] {
+    text-transform: lowercase !important;
+}
+.footer-color {
+  background-color: #008000;
+}
+</style>
