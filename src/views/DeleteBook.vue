@@ -3,29 +3,7 @@
         <Navigation/>
 
         <div id="search-Wrap">
-            <div id="search-form">
-                <form action="" method="get">
-                    <h3>Search for a Book</h3>
-                    <div>
-                        <label for="book-title">Book Title</label>
-                        <input type="text" name="" id="book-title" placeholder="eg: Control Engineering">
-                    </div>
-                    <div>
-                        <label for="book-author">Book Author</label>
-                        <input type="text" name="" id="book-author" placeholder="eg: B. K. Oguta">
-                    </div>
-                    <div>
-                        <label for="book-category">Book Category</label>
-                        <select name="" id="book-category">
-                            <option value="">Choose Book Category</option>
-                        </select>
-                    </div>
-                    <div>
-                        <button type="submit">Search</button>
-                    </div>
-                </form>
-            </div>
-
+            <Search/>
             <div id="search-result">
                 <h3>Search Result</h3>
                 <div id="keys">
@@ -68,11 +46,13 @@
 <script>
 
 import Navigation from '@/components/Navigation.vue';
+import Search from '@/components/Search.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
   components: {
     Navigation,
+    Search,
     Footer,
   },
 
@@ -88,68 +68,6 @@ div#search-Wrap{
     height: 100%;
     padding: 30px 0px;
 }
-div#search-form {
-    width: 35%;
-    height: auto;
-    display: block;
-    padding: 0 50px;
-    text-align: left;
-}
-div#search-form > form,
-div#search-form > form > div {
-    display: block;
-    position: relative;
-    width: auto;
-    height: auto;
-}
-div#search-form > form > h3 {
-    font-weight: lighter;
-    font-size: 1.3em;
-    color: green;
-    padding: 0;
-    margin: 10px 0;
-}
-div#search-form > form> div:nth-child(even) {
-    margin: 5px 0;
-}
-div#search-form > form > div > label {
-    padding: 5px 0;
-    margin: 0;
-    display: block;
-    position: relative;
-    font-weight: 500;
-    font-size: 14px;
-}
-div#search-form > form > div > input,
-div#search-form > form > div > select {
-    height: 40px;
-    width: 100%;
-    display: block;
-    position: relative;
-    padding: 7.5px 10px;
-    outline: none;
-    border: 1px solid #cccccc;
-    box-sizing: border-box;
-    font-size: 14px;
-}
-div#search-form > form > div > input:focus,
-div#search-form > form > div > select:focus {
-    border : 1px solid green;
-}
-div#search-form > form > div > button {
-    height: 40px;
-    width: auto;
-    padding: 10px 20px;
-    margin-top: 10px;
-    outline: none;
-    border: none;
-    background: linear-gradient(90deg, #9ebd13 0%, #008552 100%) !important;
-    color: #ffffff;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-
 div#search-result {
     width: 65%;
     padding: 0 30px;
