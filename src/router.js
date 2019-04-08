@@ -9,6 +9,7 @@ import RequestedBook from './views/RequestBook.vue';
 import SearchBook from './views/SearchBook.vue';
 import UpdateBook from './views/UpdateBook.vue';
 import ViewRequestedBook from './views/ViewRequestedBook.vue';
+import Login from './views/Login.vue';
 
 
 // const Vue = require('vue');
@@ -30,6 +31,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/Home',
       name: 'home',
       component: Index,
     },
@@ -54,12 +60,12 @@ export default new Router({
       component: SearchBook,
     },
     {
-      path: '/updateBook',
+      path: '/updateBook/:id',
       name: 'updateBook',
       component: UpdateBook,
     },
     {
-      path: '/viewBook',
+      path: '/viewRequestedBook',
       name: 'viewBook',
       component: ViewRequestedBook,
     },
