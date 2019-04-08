@@ -1,17 +1,17 @@
 <template>
   <div id="login">
-    <h1>Login</h1>
+    <!-- <h1>Login</h1>
     <form action>
       <div>
-        <input type="text" name id placeholder="Email Address">
+        <input type="text" name id="email" placeholder="Email Address">
       </div>
       <div>
-        <input type="password" name id placeholder="Password">
+        <input type="password" name id="password" placeholder="Password">
       </div>
       <div>
         <input type="submit" value="Login">
       </div>
-    </form>
+    </form> -->
   </div>
 </template>
 
@@ -22,15 +22,13 @@ export default {};
 <style scoped>
 /* Block */
 div#login {
-  width: 300px;
+  width: 100%;
   height: auto;
   display: block;
-  position: absolute;
-  right: 50px;
-  top: 65px;
+  position: relative;
   background-color: #ffffff;
-  -webkit-box-shadow: 0 0 15px rgba(99, 114, 130, 0.3);
-  box-shadow: 0 0 15px rgba(99, 114, 130, 0.3);
+  /* -webkit-box-shadow: 0 0 15px rgba(99, 114, 130, 0.3);
+  box-shadow: 0 0 15px rgba(99, 114, 130, 0.3); */
   padding: 20px;
   z-index: 2;
 }
