@@ -31,14 +31,14 @@ export default {
 
   data() {
     return {
-      searchParam: "",
-    }
+      searchParam: '',
+    };
   },
 
   methods: {
-    mainSearch: function () {
-      this.$router.push()
-    }
+    mainSearch() {
+      this.$router.push();
+    },
   },
 };
 

@@ -12,27 +12,26 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 <script>
 export default {
 
-    data() {
-        return {
-            randomBooks: [],
-        }
-    },
+  data() {
+    return {
+      randomBooks: [],
+    };
+  },
 
-    mounted() {
-        fetch('http://localhost:8081/books/random').then(res=>res.json()).then(res=>{
-            console.log(res);
-            this.randomBooks = res.slice();
-        });
-    },
-    
-}
+  mounted() {
+    fetch('http://localhost:8081/books/random').then(res => res.json()).then((res) => {
+      this.randomBooks = res.slice();
+    });
+  },
+
+};
 </script>
 
 <style scoped>
@@ -65,7 +64,7 @@ div.banner {
     height: 200px;
     width: 100%;
     display: block;
-    position: relative;    
+    position: relative;
     background: url('../assets/library.jpg');
     background-position: 50% 50%;
     background-size: cover;
@@ -108,4 +107,3 @@ div.content div p span {
 }
 
 </style>
-

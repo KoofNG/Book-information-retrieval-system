@@ -59,14 +59,14 @@ export default {
       fetch(`http://localhost:8081/books/remove/${id}`)
         .then(res => res.json())
         .then((res) => {
-          if (res.status == 'unsuccesful') {
+          if (res.status === 'unsuccesful') {
             alert('Book not deleted');
           } else {
             alert('Book deleted');
-            this.searchResult = this.searchResult.filter(result => result._id != id);
+            this.searchResult = this.searchResult.filter(result => result._id !== id);
           }
         })
-        .catch((err)=>{
+        .catch(() => {
           alert('Book not Deleted');
         });
       // console.log(id)

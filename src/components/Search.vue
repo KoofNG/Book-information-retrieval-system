@@ -32,7 +32,9 @@
         <label for="book-category">Book Category</label>
         <select name id="book-category" v-model="paramDict['category']">
           <option value>Choose Book Category</option>
-          <option v-for="(item, index) in categories" :key="index" v-bind:value="item">{{item}}</option>
+          <option
+            v-for="(item, index) in categories"
+            :key="index" v-bind:value="item">{{item}}</option>
         </select>
       </div>
       <div>
@@ -62,39 +64,39 @@ export default {
   },
 
   methods: {
-    search: function () {
-      const loader = document.querySelector('#loader');      
+    search() {
+      const loader = document.querySelector('#loader');
       const header = document.querySelector('#header');
       if (loader) {
         loader.classList.add('active');
       }
       const query = `http://localhost:8081/books/${this.searchCategory}/${this.paramDict[this.searchCategory]}`;
       fetch(query)
-        .then((res) => res.json())
+        .then(res => res.json())
         .then((res) => {
-          if (res.length != 0) {
+          if (res.length !== 0) {
             loader.classList.remove('active');
             document.querySelector('.result').classList.add('active');
             this.searchResult = res.slice();
             header.innerHTML = 'Search Results';
             this.$emit('search', this.searchResult);
-          } else {            
+          } else {
             loader.classList.remove('active');
             document.querySelector('.result').classList.add('active');
             header.innerHTML = 'No record found';
           }
         })
-        .catch((err) => {
-          alert('Search Unsuccessful');
+        .catch(() => {
           loader.classList.remove('active');
+          alert('Search Unsuccessful');
         });
     },
   },
 
   mounted() {
     fetch('http://localhost:8081/books/categories')
-      .then((res) => res.json())
-      .then((res) => (this.categories = res.slice()));
+      .then(res => res.json())
+      .then(res => { return this.categories = res.slice()});
   },
 
 };

@@ -65,7 +65,9 @@
           </label>
           <select name="book-category" required="required" id="book-categorry" v-model="category">
             <option value="0" disabled>Choose Book Category</option>
-            <option v-for="(item, index) in categories" :key="index" v-bind:value="item">{{item}}</option>
+            <option
+              v-for="(item, index) in categories"
+              :key="index" v-bind:value="item">{{item}}</option>
           </select>
         </div>
         <div>
@@ -88,38 +90,38 @@
       </form>
     </div>
     </div>
-    
+
     <Footer/>
   </div>
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";
-import Loader from "@/components/Loader.vue";
+import Navigation from '@/components/Navigation.vue';
+import Footer from '@/components/Footer.vue';
+import Loader from '@/components/Loader.vue';
 
 export default {
   components: {
     Navigation,
     Loader,
-    Footer
+    Footer,
   },
 
   data() {
     return {
-      qty: "",
-      title: "",
-      author: "",
-      edition: "",
-      category: "",
-      yearOfPub: "",
+      qty: '',
+      title: '',
+      author: '',
+      edition: '',
+      category: '',
+      yearOfPub: '',
       categories: [],
     };
   },
 
   methods: {
-    createBook: function() {
-      const loader = document.querySelector("#loader");
+    createBook() {
+      const loader = document.querySelector('#loader');
       const book = {
         title: this.title,
         author: this.author,
@@ -129,25 +131,25 @@ export default {
         publicationYear: this.yearOfPub,
       };
 
-      if ((this.title && this.author && this.edition && this.publisher && this.category && this.yearOfPub) != "") {
+      if ((this.title && this.author && this.edition && this.publisher && this.category && this.yearOfPub) !== '') {
         if (loader) {
-          loader.classList.add("active");
-          var updateURL = 'http://localhost:8081/books/addBook';
+          loader.classList.add('active');
+          const updateURL = 'http://localhost:8081/books/addBook';
           fetch(updateURL, {
             method: 'POST',
             headers: {
-              "Content-Type" : "application/json"
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify(book),
           })
-          .then(res => res.json())
-          .then(response => {
-            console.log('Success:', JSON.stringify(response));
-            alert('Book Created Successfully');
-            loader.classList.remove('active');
-            this.$router.push('/Home');
+            .then(res => res.json())
+            .then((response) => {
+              console.log('Success:', JSON.stringify(response));
+              alert('Book Created Successfully');
+              loader.classList.remove('active');
+              this.$router.push('/Home');
             })
-          .catch(error => console.log('Error:', error));
+            .catch(error => console.log('Error:', error));
         }
       }
     },
@@ -155,8 +157,8 @@ export default {
 
   mounted() {
     fetch('http://localhost:8081/books/categories')
-      .then((res) => res.json())
-      .then((res) => (this.categories = res.slice()));
+      .then(res => res.json())
+      .then(res => { return this.categories = res.slice()});
   },
 };
 </script>

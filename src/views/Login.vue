@@ -125,16 +125,18 @@ export default {
   methods: {
     login() {
       this.authenticating = true;
-      if (this.logEmail != '' && this.logPassword != '') {
+      if (this.logEmail !== '' && this.logPassword !== '') {
         this.$router.push('/Home');
       } else {
+        this.$router.push('/');
       }
     },
 
     signup() {
-      if (this.regEmail != '' && this.regPassword != '' && this.regCategory != '') {
+      if (this.regEmail !== '' && this.regPassword !== '' && this.regCategory !== '') {
         this.$router.push('/Home');
       } else {
+        this.$router.push('/');
       }
     },
   },

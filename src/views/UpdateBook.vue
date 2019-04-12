@@ -12,14 +12,18 @@
                 Book Title
                 <span class="required">*</span>
               </label>
-              <input type="text" name id="title" required="required" placeholder="Book Title" v-model="title">
+              <input type="text" name
+                id="title" required="required"
+                placeholder="Book Title" v-model="title">
             </div>
             <div>
               <label for="author-name">
                 Author
                 <span class="required">*</span>
               </label>
-              <input type="text" name id="author-name" required="required" placeholder="Author's Name" v-model="author">
+              <input type="text" name
+                id="author-name" required="required"
+                placeholder="Author's Name" v-model="author">
             </div>
             <div>
               <label for="">Edition</label>
@@ -34,10 +38,17 @@
                 Book Category
                 <span class="required">*</span>
               </label>
-              <select name="book-category" required="required" id="book-category" v-model="bookCategory" >
+              <select name="book-category"
+                required="required"
+                id="book-category"
+                v-model="bookCategory" >
                 <option disabled value>Choose Book Category</option>
                 <option :value="bookCategory" selected>{{bookCategory}}</option>
-                <option v-for="(item, index) in categories" :key="index" v-bind:value="item">{{item}}</option>
+                <option
+                  v-for="(item, index) in categories"
+                  :key="index" v-bind:value="item">
+                  {{item}}
+                </option>
               </select>
             </div>
             <div>
@@ -45,7 +56,8 @@
                 Year of Publication
                 <span class="required">*</span>
               </label>
-              <input type="text" name id="year" required="required" placeholder="1995" v-model="yearOfPub">
+              <input type="text" name id="year" required="required"
+              placeholder="1995" v-model="yearOfPub">
             </div>
             <div>
               <button type="submit" @click="updateBook">Update Book Record</button>
@@ -61,13 +73,11 @@
 
 <script>
 import Navigation from '@/components/Navigation.vue';
-import Search from '@/components/Search.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
   components: {
     Navigation,
-    Search,
     Footer,
   },
 
@@ -79,13 +89,13 @@ export default {
       qty: '',
       yearOfPub: '',
       bookCategory: '',
-      id: "",
+      id: '',
       categories: [],
     };
   },
 
   methods: {
-    updateBook : function () {
+    updateBook() {
       const book = {
         title: this.title,
         author: this.author,
@@ -95,23 +105,20 @@ export default {
         publicationYear: this.yearOfPub,
       };
 
-     
 
-      var updateURL = `http://localhost:8081/books/update/${this.id}`;
+      const updateURL = `http://localhost:8081/books/update/${this.id}`;
       fetch(updateURL, {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           // "Content-Type": "application/x-www-form-urlencoded",
         },
         body: JSON.stringify(book),
       })
-      .then(res => res.json())
-      .then(response => console.log('Success:', JSON.stringify(response)))
-      .catch(error => console.log('Error:', error))
-      .finally( console.log(book));
-      
-    }
+        .then(res => res.json())
+        .then((response) => { console.log('Success:', JSON.stringify(response)); })
+        .catch((error) => { console.log('Error:', error); });
+    },
   },
 
   mounted() {
@@ -127,14 +134,14 @@ export default {
     });
 
     fetch('http://localhost:8081/books/categories')
-      .then((res) => res.json())
-      .then((res) => (this.categories = res.slice()));
+      .then(res => res.json())
+      .then(res => {return this.categories = res.slice()});
   },
 };
 </script>
 
 <style scoped>
-div#wraps {  
+div#wraps {
   display: flex;
   justify-content: left;
   align-content: flex-start;
