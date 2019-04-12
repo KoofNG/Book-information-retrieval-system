@@ -4,11 +4,8 @@ import Router from 'vue-router';
 // Importing the various views from the Views folder
 import Index from './views/Index.vue';
 import CreateBook from './views/CreateBook.vue';
-import DeleteBook from './views/DeleteBook.vue';
-import RequestedBook from './views/RequestBook.vue';
 import SearchBook from './views/SearchBook.vue';
 import UpdateBook from './views/UpdateBook.vue';
-import ViewRequestedBook from './views/ViewRequestedBook.vue';
 import Login from './views/Login.vue';
 
 
@@ -45,16 +42,6 @@ export default new Router({
       component: CreateBook,
     },
     {
-      path: '/deleteBook',
-      name: 'deleteBook',
-      component: DeleteBook,
-    },
-    {
-      path: '/requestBook',
-      name: 'requestedBook',
-      component: RequestedBook,
-    },
-    {
       path: '/search',
       name: 'search',
       component: SearchBook,
@@ -63,11 +50,6 @@ export default new Router({
       path: '/updateBook/:id',
       name: 'updateBook',
       component: UpdateBook,
-    },
-    {
-      path: '/viewRequestedBook',
-      name: 'viewBook',
-      component: ViewRequestedBook,
     },
   ],
 });
