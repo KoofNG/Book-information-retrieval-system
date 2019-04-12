@@ -4,14 +4,15 @@
     <div class="searchBox">
       <div class="content">
         <p>Find a book</p>
-        <div class="questionRow">
+        <!-- <div class="questionRow">
           <form action method="post" v-on:submit.prevent>
-            <input type="text" name id placeholder="eg: Control Engineering">
-            <button type="submit">Search</button>
+            <input type="text" name id placeholder="eg: Control Engineering" v-model="searchParam">
+            <button type="submit" @click="mainSearch">Search</button>
           </form>
-        </div>
+        </div> -->
       </div>
     </div>
+    <Random/>
     <Footer/>
   </div>
 </template>
@@ -19,11 +20,25 @@
 <script>
 import Navigation from '@/components/Navigation.vue';
 import Footer from '@/components/Footer.vue';
+import Random from '@/components/RandomBooks.vue';
 
 export default {
   components: {
     Navigation,
+    Random,
     Footer,
+  },
+
+  data() {
+    return {
+      searchParam: "",
+    }
+  },
+
+  methods: {
+    mainSearch: function () {
+      this.$router.push()
+    }
   },
 };
 
@@ -38,6 +53,10 @@ div.searchBox {
   padding: 10px 50px;
   margin: 0;
   box-sizing: border-box;
+  background: url('../assets/bgp.jpg');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 div.content {
   display: block;
@@ -83,10 +102,10 @@ div.questionRow > form > button {
   background-color: #008000;
   border: 1px solid #008000;
   color: #ffffff;
-} 
+}
 
 div#footer{
-  position: absolute;
+  position: relative;
   bottom: 0px !important;
 }
 
