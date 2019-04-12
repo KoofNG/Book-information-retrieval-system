@@ -44,40 +44,59 @@
 
 <script>
 export default {
-  data: function() {
+  data() {
     return {
       paramDict: {
         author: null,
         category: null,
-        title: null
+        title: null,
       },
-      bookTitle: "",
-      bookAuthor: "",
-      category: "",
-      searchCategory: "author",
+      bookTitle: '',
+      bookAuthor: '',
+      category: '',
+      searchCategory: 'author',
+      isActive: false,
       categories: [],
-      searchResult: []
+      searchResult: [],
     };
   },
+
   methods: {
-    search: function() {
-      let query = `http://192.168.43.220:8080/books/${this.searchCategory}/${
-        this.paramDict[this.searchCategory]
-      }`;
+    search: function () {
+      const loader = document.querySelector('#loader');      
+      const header = document.querySelector('#header');
+      if (loader) {
+        loader.classList.add('active');
+      }
+      const query = `http://localhost:8081/books/${this.searchCategory}/${this.paramDict[this.searchCategory]}`;
       fetch(query)
-        .then(res => res.json())
-        .then(res => {
-          this.searchResult = res.slice();
-          this.$emit("search", this.searchResult);
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.length != 0) {
+            loader.classList.remove('active');
+            document.querySelector('.result').classList.add('active');
+            this.searchResult = res.slice();
+            header.innerHTML = 'Search Results';
+            this.$emit('search', this.searchResult);
+          } else {            
+            loader.classList.remove('active');
+            document.querySelector('.result').classList.add('active');
+            header.innerHTML = 'No record found';
+          }
+        })
+        .catch((err) => {
+          alert('Search Unsuccessful');
+          loader.classList.remove('active');
         });
-    }
+    },
   },
 
   mounted() {
-    fetch("http://192.168.43.220:8080/books/categories")
-      .then(res => res.json())
-      .then(res => (this.categories = res.slice()));
-  }
+    fetch('http://localhost:8081/books/categories')
+      .then((res) => res.json())
+      .then((res) => (this.categories = res.slice()));
+  },
+
 };
 </script>
 
@@ -148,4 +167,3 @@ div#search-form > form > div > button {
   cursor: pointer;
 }
 </style>
-
