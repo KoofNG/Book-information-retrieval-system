@@ -134,8 +134,8 @@ export default {
     });
 
     fetch('http://localhost:8081/books/categories')
-      .then(res => res.json())
-      .then(res => {return this.categories = res.slice()});
+      .then((res) => res.json())
+      .then((res) => {return this.categories = res.slice()});
   },
 };
 </script>
