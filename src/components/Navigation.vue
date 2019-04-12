@@ -7,17 +7,14 @@
     <div class="accounts">
       <h1 @click="showMenu">&#9776;</h1>
     </div>
-    
+
     <div id="menus">
       <div class='links'>
           <ul>
             <li><router-link to="/Home">Home</router-link></li>
             <li><router-link to="/search">Search</router-link></li>
             <li><router-link to="/createBook">Create Book</router-link></li>
-            <li><router-link to="/updateBook">Update Book</router-link></li>
-            <li><router-link to="/deleteBook">Delete Book</router-link></li>
-            <li><router-link to="/requestBook">Request Book</router-link></li>
-            <li><router-link to="/viewRequestedBook">View Request</router-link></li>
+            <!-- <li><router-link to="/updateBook">Update Book</router-link></li> -->
           </ul>
       </div>
     </div>
@@ -26,15 +23,11 @@
 </template>
 
 <script>
-// import Login from '@/components/Login.vue';
 export default {
   data() {
     return {
     };
   },
-  // components: {
-  //   Login,
-  // },
   methods: {
     showMenu() {
       const menu = document.querySelector('#menus');
