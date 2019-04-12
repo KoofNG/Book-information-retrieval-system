@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <div id="loader"></div>
-    </div>
+    <div id="loader"></div>
 </template>
 
 <script>
 export default {
-    
-}
+
+};
 </script>
 
 <style scoped>
