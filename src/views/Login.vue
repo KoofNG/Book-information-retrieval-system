@@ -6,71 +6,74 @@
       </div>
     </div>
 
-    <div id="forms">
-      <div class="links">
-        <div>
-          <p id="login" class="active">Login</p>
+    <div id="wraps">
+      <div id="forms">
+        <div class="links">
+          <div>
+            <p id="login" class="active">Login</p>
+          </div>
+          <div>
+            <p id="signup">Sign up</p>
+          </div>
         </div>
-        <div>
-          <p id="signup">Sign up</p>
-        </div>
-      </div>
-      <div class="user-forms">
-        <Loader v-if="authenticating"/>
-        <div id="login" class="active">
-          <h1>Login</h1>
-          <form name="login" v-on:submit.prevent>
-            <div>
-              <input type="email"
-                name id="logemail"
-                placeholder="Email Address"
-                v-model="logEmail">
-            </div>
-            <div>
-              <input
-                type="password"
-                id="logpassword"
-                placeholder="Password"
-                v-model="logPassword"
-              >
-            </div>
-            <div>
-              <input type="submit" value="Login" @click="login">
-            </div>
-          </form>
-        </div>
-        <div id="signup">
-          <h1>Sign up</h1>
-          <form name="register" v-on:submit.prevent>
-            <div>
-              <input
-                type="email"
-                name id="email"
-                placeholder="Email Address"
-                v-model="regEmail">
-            </div>
-            <div>
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                v-model="regPassword"
-              >
-            </div>
-            <div>
-              <select name="category" id v-model="regCategory">
-                <option value="0" disabled>Choose User Category</option>
-                <option value="student">Student</option>
-                <option value="staff">Staff</option>
-              </select>
-            </div>
-            <div>
-              <input type="submit" value="Register" @click="signup">
-            </div>
-          </form>
+        <div class="user-forms">
+          <Loader v-if="authenticating"/>
+          <div id="login" class="active">
+            <h1>Login</h1>
+            <form name="login" v-on:submit.prevent>
+              <div>
+                <input type="email"
+                  name id="logemail"
+                  placeholder="Email Address"
+                  v-model="logEmail">
+              </div>
+              <div>
+                <input
+                  type="password"
+                  id="logpassword"
+                  placeholder="Password"
+                  v-model="logPassword"
+                >
+              </div>
+              <div>
+                <input type="submit" value="Login" @click="login">
+              </div>
+            </form>
+          </div>
+          <div id="signup">
+            <h1>Sign up</h1>
+            <form name="register" v-on:submit.prevent>
+              <div>
+                <input
+                  type="email"
+                  name id="email"
+                  placeholder="Email Address"
+                  v-model="regEmail">
+              </div>
+              <div>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  v-model="regPassword"
+                >
+              </div>
+              <div>
+                <select name="category" id v-model="regCategory">
+                  <option value="0" disabled>Choose User Category</option>
+                  <option value="student">Student</option>
+                  <option value="staff">Staff</option>
+                </select>
+              </div>
+              <div>
+                <input type="submit" value="Register" @click="signup">
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
+
 
     <div id="footer" class="footer-color">
       <h6>
@@ -84,6 +87,7 @@
 
 <script>
 import Loader from '@/components/Loader.vue';
+
 export default {
   components: {
     Loader,
@@ -114,13 +118,6 @@ export default {
         const currentActive = document.querySelector('div.user-forms div.active');
         currentActive.classList.remove('active');
         document.querySelector(`div#${route}`).classList.add('active');
-
-
-        // if (currentActive) {
-        // }
-        // function showForm(x) {
-        // }
-        // setTimeout(showForm(route), 200);        
       });
     }
   },
@@ -129,14 +126,14 @@ export default {
     login() {
       this.authenticating = true;
       if (this.logEmail != '' && this.logPassword != '') {
-          this.$router.push('/Home');
+        this.$router.push('/Home');
       } else {
       }
     },
 
     signup() {
-      if (this.regEmail != '' && this.regPassword != '' && this.regCategory != '') {          
-          this.$router.push('/Home');
+      if (this.regEmail != '' && this.regPassword != '' && this.regCategory != '') {
+        this.$router.push('/Home');
       } else {
       }
     },
@@ -146,6 +143,16 @@ export default {
 
 <style scoped>
 /* Block */
+div#wraps {
+  width: 100%;
+  display: block;
+  height: calc(100vh - 141.5px);
+  position: relative;
+  background: url('../assets/bgp.jpg');
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 div#navigation {
   width: 100%;
   height: 80px;
@@ -159,7 +166,7 @@ div#forms {
   display: block;
   top: 35%;
   transform: translateY(-35%);
-  right: 50px;
+  left: 50px;
   width: 450px;
   height: auto;
   -webkit-box-shadow: 0 0 15px rgba(99, 114, 130, 0.3);
