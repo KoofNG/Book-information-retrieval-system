@@ -3,94 +3,93 @@
     <Navigation/>
     <div id="wraps">
       <div id="createBookForm">
-      <h3>Create New Book Record</h3>
-      <form action v-on:submit.prevent method="post">
-        <Loader/>
-        <div>
-          <label for="book-title">
-            Book Title
-            <span class="required">*</span>
-          </label>
-          <input
-            type="text"
-            name
-            id="book-title"
-            required="required"
-            placeholder="Book Title"
-            v-model="title"
-          >
-        </div>
-        <div>
-          <label for="author-name">
-            Author
-            <span class="required">*</span>
-          </label>
-          <input
-            type="text"
-            name
-            id="author-name"
-            required="required"
-            placeholder="Author's Name"
-            v-model="author"
-          >
-        </div>
-        <div>
-          <label for="edition">
-            Edition
-            <span class="required">*</span>
-          </label>
-          <input
-            type="text"
-            name
-            id="edition"
-            required="required"
-            placeholder="6th Edition"
-            v-model="edition"
-          >
-        </div>
-        <div>
-          <label for="">Quantity</label>
-          <input
-            type="text"
-            name
-            id=""
-            placeholder="1"
-            v-model="qty"
-          >
-        </div>
-        <div>
-          <label for="book-category">
-            Book Category
-            <span class="required">*</span>
-          </label>
-          <select name="book-category" required="required" id="book-categorry" v-model="category">
-            <option value="0" disabled>Choose Book Category</option>
-            <option
-              v-for="(item, index) in categories"
-              :key="index" v-bind:value="item">{{item}}</option>
-          </select>
-        </div>
-        <div>
-          <label for="year">
-            Year of Publication
-            <span class="required">*</span>
-          </label>
-          <input
-            type="text"
-            name
-            id="year"
-            required="required"
-            placeholder="1995"
-            v-model="yearOfPub"
-          >
-        </div>
-        <div>
-          <button type="submit" @click="createBook">Submit New Book</button>
-        </div>
-      </form>
+        <h3>Create New Book Record</h3>
+        <form action v-on:submit.prevent method="post">
+          <Loader/>
+          <div>
+            <label for="book-title">
+              Book Title
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              name
+              id="book-title"
+              required="required"
+              placeholder="Book Title"
+              v-model="title"
+            >
+          </div>
+          <div>
+            <label for="author-name">
+              Author
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              name
+              id="author-name"
+              required="required"
+              placeholder="Author's Name"
+              v-model="author"
+            >
+          </div>
+          <div>
+            <label for="edition">
+              Edition
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              name
+              id="edition"
+              required="required"
+              placeholder="6th Edition"
+              v-model="edition"
+            >
+          </div>
+          <div>
+            <label for="">Quantity</label>
+            <input
+              type="text"
+              name
+              id=""
+              placeholder="1"
+              v-model="qty"
+            >
+          </div>
+          <div>
+            <label for="book-category">
+              Book Category
+              <span class="required">*</span>
+            </label>
+            <select name="book-category" required="required" id="book-categorry" v-model="category">
+              <option value="0" disabled>Choose Book Category</option>
+              <option
+                v-for="(item, index) in categories"
+                :key="index" v-bind:value="item">{{item}}</option>
+            </select>
+          </div>
+          <div>
+            <label for="year">
+              Year of Publication
+              <span class="required">*</span>
+            </label>
+            <input
+              type="text"
+              name
+              id="year"
+              required="required"
+              placeholder="1995"
+              v-model="yearOfPub"
+            >
+          </div>
+          <div>
+            <button type="submit" @click="createBook">Submit New Book</button>
+          </div>
+        </form>
+      </div>
     </div>
-    </div>
-
     <Footer/>
   </div>
 </template>
@@ -134,7 +133,7 @@ export default {
       if ((this.title && this.author && this.edition && this.publisher && this.category && this.yearOfPub) !== '') {
         if (loader) {
           loader.classList.add('active');
-          const updateURL = 'http://localhost:8081/books/addBook';
+          const updateURL = '/books/addBook';
           fetch(updateURL, {
             method: 'POST',
             headers: {
@@ -144,21 +143,27 @@ export default {
           })
             .then(res => res.json())
             .then((response) => {
-              console.log('Success:', JSON.stringify(response));
+              // console.log('Success:', JSON.stringify(response));
               alert('Book Created Successfully');
               loader.classList.remove('active');
-              this.$router.push('/Home');
+              return this.$router.push('/Home');
             })
-            .catch(error => console.log('Error:', error));
+            .catch((error) => {return console.log('Error:', error)});
         }
       }
     },
   },
 
   mounted() {
-    fetch('http://localhost:8081/books/categories')
-      .then((res) => res.json())
+    var user = window.localStorage.getItem('user');
+    console.log(this);
+    if (!user) {
+      this.$router.push('/');
+    } else {
+    fetch('/books/categories')
+      .then((res) => {return res.json()})
       .then((res) => {return this.categories = res.slice()});
+    }
   },
 };
 </script>
@@ -167,7 +172,7 @@ export default {
 div#wraps {
   width: 100%;
   display: flex;
-  height: calc(100vh - 110.2px);
+  height: auto;
   padding: 35px 0px;
   position: relative;
   background: url('../assets/bgp.jpg');
@@ -254,5 +259,9 @@ div#createBookForm > form > div > button {
 }
 input[type="date"] {
   text-transform: uppercase;
+}
+
+#footer {
+  position: relative !important;
 }
 </style>
