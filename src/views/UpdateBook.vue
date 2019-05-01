@@ -106,7 +106,7 @@ export default {
       };
 
 
-      const updateURL = `http://localhost:8081/books/update/${this.id}`;
+      const updateURL = `/books/update/${this.id}`;
       fetch(updateURL, {
         method: 'POST',
         headers: {
@@ -122,21 +122,27 @@ export default {
   },
 
   mounted() {
-    const bookId = this.$route.params.id;
-    fetch(`http://localhost:8081/books/getOne/${bookId}`).then(res => res.json()).then((res) => {
-      this.title = res.title;
-      this.author = res.author;
-      this.edition = res.edition;
-      this.qty = res.quantity;
-      this.bookCategory = res.category;
-      this.yearOfPub = new Date(res.publicationYear).getFullYear();
-      this.id = res._id;
-    });
+    var user = window.localStorage.getItem('user');
+    if (!user) {
+      this.$router.push('/');
+    } else {
+      const bookId = this.$route.params.id;
+      fetch(`/books/getOne/${bookId}`).then(res => res.json()).then((res) => {
+        this.title = res.title;
+        this.author = res.author;
+        this.edition = res.edition;
+        this.qty = res.quantity;
+        this.bookCategory = res.category;
+        this.yearOfPub = new Date(res.publicationYear).getFullYear();
+        this.id = res._id;
+      });
 
-    fetch('http://localhost:8081/books/categories')
-      .then((res) => res.json())
-      .then((res) => {return this.categories = res.slice()});
-  },
+      fetch('/books/categories')
+        .then(res => res.json())
+        .then(res => this.categories = res.slice());
+        return true;
+      }    
+   },
 };
 </script>
 
