@@ -19,7 +19,7 @@ div#footer{
     flex-direction: row;
     justify-content: center;
     background-color: green;
-    position: relative;
+    position: fixed;
     bottom: 0px;
 }
 div#footer>p{
