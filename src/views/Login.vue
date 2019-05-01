@@ -22,10 +22,13 @@
             <h1>Login</h1>
             <form name="login" v-on:submit.prevent>
               <div>
-                <input type="email"
-                  name id="logemail"
+                <input
+                  type="email"
+                  name
+                  id="logemail"
                   placeholder="Email Address"
-                  v-model="logEmail">
+                  v-model="logEmail"
+                >
               </div>
               <div>
                 <input
@@ -44,19 +47,10 @@
             <h1>Sign up</h1>
             <form name="register" v-on:submit.prevent>
               <div>
-                <input
-                  type="email"
-                  name id="email"
-                  placeholder="Email Address"
-                  v-model="regEmail">
+                <input type="email" name id="email" placeholder="Email Address" v-model="regEmail">
               </div>
               <div>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  v-model="regPassword"
-                >
+                <input type="password" id="password" placeholder="Password" v-model="regPassword">
               </div>
               <div>
                 <select name="category" id v-model="regCategory">
@@ -74,72 +68,117 @@
       </div>
     </div>
 
-
     <div id="footer" class="footer-color">
       <h6>
         Made with
         <span>&#10084;</span> by
-        <a href="http://">KoofNG</a>
+        <a href="http://">Ibrahim Abiodun</a>
       </h6>
     </div>
   </div>
 </template>
 
 <script>
-import Loader from '@/components/Loader.vue';
-
+import Loader from "@/components/Loader.vue";
 export default {
   components: {
-    Loader,
+    Loader
   },
 
   data() {
     return {
-      logEmail: '',
-      logPassword: '',
-      regEmail: '',
-      regPassword: '',
-      regCategory: '',
-      authenticating: false,
+      logEmail: "",
+      logPassword: "",
+      regEmail: "",
+      regPassword: "",
+      regCategory: "",
+      authenticating: false
     };
   },
 
   mounted() {
-    const chooseForm = document.querySelectorAll('div.links div p');
+    const chooseForm = document.querySelectorAll("div.links div p");
     for (let index = 0; index < chooseForm.length; index++) {
       const element = chooseForm[index];
-      element.addEventListener('click', (e) => {
-        const activeLink = document.querySelector('p.active');
-        activeLink.classList.remove('active');
-        // if (activeLink) {
-        // }
-        element.classList.add('active');
+      element.addEventListener("click", e => {
+        const activeLink = document.querySelector("p.active");
+        activeLink.classList.remove("active");
+        element.classList.add("active");
         const route = e.target.id;
-        const currentActive = document.querySelector('div.user-forms div.active');
-        currentActive.classList.remove('active');
-        document.querySelector(`div#${route}`).classList.add('active');
+        const currentActive = document.querySelector(
+          "div.user-forms div.active"
+        );
+        currentActive.classList.remove("active");
+        document.querySelector(`div#${route}`).classList.add("active");
       });
     }
   },
 
   methods: {
-    login() {
+    login : function () {
       this.authenticating = true;
-      if (this.logEmail !== '' && this.logPassword !== '') {
-        this.$router.push('/Home');
+      if (this.logEmail !== "" && this.logPassword !== "") {
+        fetch("/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: this.logEmail,
+            password: this.logPassword,
+          })
+        })
+          .then((res)=>res.json())
+          .then((res) => {
+            const user = res;
+            if (res.message === "invalid password") {
+              alert('Incorrect Password');
+            } else if (res.message === "unknown user") {
+              alert('This account doesnt exist');
+            } else {
+              window.localStorage.setItem('user', JSON.stringify(user));
+              this.$router.push("/Home");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
-        this.$router.push('/');
+        this.$router.push("/");
       }
     },
 
-    signup() {
-      if (this.regEmail !== '' && this.regPassword !== '' && this.regCategory !== '') {
-        this.$router.push('/Home');
+    signup: function () {
+      if (
+        this.regEmail !== "" &&
+        this.regPassword !== "" 
+      ) {
+        // this.$router.push("/Home");
+        fetch ('/users/register', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            "username" : this.regEmail,
+            "password" : this.regPassword,
+            "status" : this.regCategory || "admin",
+          }),
+        })
+        .then((res) => res.json())
+        .then((res) => {
+          const user = res;
+          window.localStorage.setItem('user', JSON.stringify(user));
+          this.$router.push("/Home");
+        })
+        .catch((err) => {
+          alert('An error occured while creating an account');
+        })
       } else {
-        this.$router.push('/');
+        this.$router.push("/");
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -150,7 +189,7 @@ div#wraps {
   display: block;
   height: calc(100vh - 141.5px);
   position: relative;
-  background: url('../assets/bgp.jpg');
+  background: url("../assets/bgp.jpg");
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -327,7 +366,7 @@ input[type="submit"] {
   border-radius: 4px;
 }
 input[type="email"] {
-    text-transform: lowercase !important;
+  text-transform: lowercase !important;
 }
 .footer-color {
   background-color: #008000;
