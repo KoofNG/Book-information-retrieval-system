@@ -6,7 +6,9 @@ import Index from './views/Index.vue';
 import CreateBook from './views/CreateBook.vue';
 import SearchBook from './views/SearchBook.vue';
 import UpdateBook from './views/UpdateBook.vue';
+import RequestBook from './views/ViewRequestBook.vue';
 import Login from './views/Login.vue';
+import ViewBook from './views/viewBooks.vue';
 
 
 // const Vue = require('vue');
@@ -50,6 +52,16 @@ export default new Router({
       path: '/updateBook/:id',
       name: 'updateBook',
       component: UpdateBook,
+    },
+    {
+      path: '/viewRequest',
+      name: 'requestBook',
+      component: RequestBook,
+    },
+    {
+      path: '/viewBooks/:id',
+      name: 'ViewBook',
+      component: ViewBook,
     },
   ],
 });
