@@ -70,7 +70,7 @@ export default {
       if (loader) {
         loader.classList.add('active');
       }
-      const query = `http://localhost:8081/books/${this.searchCategory}/${this.paramDict[this.searchCategory]}`;
+      const query = `/books/${this.searchCategory}/${this.paramDict[this.searchCategory]}`;
       fetch(query)
         .then(res => res.json())
         .then((res) => {
@@ -94,9 +94,9 @@ export default {
   },
 
   mounted() {
-    fetch('http://localhost:8081/books/categories')
+    fetch('/books/categories')
       .then(res => res.json())
-      .then((res) => {return this.categories = res.slice()});
+      .then(res => this.categories = res.slice());
   },
 
 };
