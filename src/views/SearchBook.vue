@@ -12,11 +12,13 @@
             <h5>{{item.author}}</h5>
             <h6>{{new Date(item.publicationYear).getFullYear()}}</h6>
             <h6>{{item.edition}}</h6>
-            <p>Quantity Available:<span id="availability">{{item.quantity}}</span></p>
+            <p @click="viewChildren(item._id)">
+              Quantity Available:
+              <span id="availability">{{item.quantity}}</span>
+            </p>
             <div>
-              <button id="request">request this book</button>
-              <button id="edit" @click="editBook(item._id)">edit</button>
-              <button id="delete" @click="bookDelete(item._id)">delete</button>
+              <button v-if="isAdmin" id="edit" @click="editBook(item._id)">edit</button>
+              <button v-if="isAdmin" id="delete" @click="bookDelete(item._id)">delete</button>
             </div>
           </div>
         </div>
@@ -27,23 +29,24 @@
 </template>
 
 <script>
-import Navigation from '@/components/Navigation.vue';
-import Search from '@/components/Search.vue';
-import Footer from '@/components/Footer.vue';
-import Loader from '@/components/Loader.vue';
+import Navigation from "@/components/Navigation.vue";
+import Search from "@/components/Search.vue";
+import Footer from "@/components/Footer.vue";
+import Loader from "@/components/Loader.vue";
 
 export default {
   components: {
     Navigation,
     Search,
     Loader,
-    Footer,
+    Footer
   },
 
   data() {
     return {
       isActive: false,
-      searchResult: [],
+      isAdmin: Boolean,
+      searchResult: []
     };
   },
 
@@ -52,26 +55,74 @@ export default {
       this.searchResult = result.slice();
     },
 
+
+    viewChildren: function (itemID) {
+      this.$router.push({ path: `/viewBooks/${itemID}` });
+    },
+
+    requestBook: function(id, event) {
+      var user = JSON.parse(window.localStorage.getItem('user'));
+
+      var userID = user._id;
+      var  userName = user.username;
+      fetch("/requests/addRequest", {
+        method: "POST",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+          userId : userID,
+          requesterName : userName,
+          bookId: id,
+        })
+      })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        window.localStorage.setItem('user', JSON.stringify(res))
+        alert('Book as being requested');
+        console.log(res);
+      });
+    },
+
     editBook(id) {
       this.$router.push({ path: `/updateBook/${id}` });
     },
     bookDelete(id) {
-      fetch(`http://localhost:8081/books/remove/${id}`)
+      fetch(`/books/remove/${id}`)
         .then(res => res.json())
-        .then((res) => {
-          if (res.status === 'unsuccesful') {
-            alert('Book not deleted');
+        .then(res => {
+          if (res.status === "unsuccesful") {
+            alert("Book not deleted");
           } else {
-            alert('Book deleted');
-            this.searchResult = this.searchResult.filter(result => result._id !== id);
+            alert("Book deleted");
+            this.searchResult = this.searchResult.filter(
+              result => result._id !== id
+            );
           }
         })
         .catch(() => {
-          alert('Book not Deleted');
+          alert("Book not Deleted");
         });
       // console.log(id)
-    },
+    }
   },
+
+  mounted() {
+    var user = window.localStorage.getItem("user");
+    if (!user) {
+      this.$router.push("/");
+    } else {
+      const euser = JSON.parse(user);
+      if (euser.status === "student" || euser.status === "staff") {
+        this.isAdmin = false;
+      } else {
+        this.isAdmin = true;
+      }
+      return true;
+    }
+  }
 };
 </script>
 
@@ -89,12 +140,14 @@ div#search-w {
   justify-content: left;
   align-content: flex-start;
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 30px 0px;
-  background: url('../assets/bgp.jpg');
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
+}
+div#search-result {
+  width: 100%;
+  display: block;
+  position: relative;
+  margin-right: 30px;
 }
 div#search-result div.result {
   width: 100%;
@@ -122,7 +175,8 @@ div#book-search-result-card {
   position: relative;
   box-shadow: 2px 0px 5px 1px #cccccc;
   background-color: #ffffff;
-  opacity: 1;}
+  opacity: 1;
+}
 div#book-search-result-card > div {
   width: 100%;
   height: 40px;
@@ -134,11 +188,13 @@ div#book-search-result-card > div > button {
   height: 100%;
   width: auto;
   padding: 10px 15px;
-  margin: 0 4.5px;
   cursor: pointer;
   border: none;
   outline: none;
   text-transform: capitalize;
+}
+div#book-search-result-card > div > button:nth-child(even) {
+  margin: 0px 3.5px;
 }
 div#book-search-result-card > div > button#delete {
   background-color: #ff0000;
@@ -171,5 +227,10 @@ div#book-search-result-card > h6 {
 }
 div#book-search-result-card:nth-child(even) {
   margin: 12.5px 0;
+}
+
+#footer {
+  position: fixed !important;
+  margin-top: 40px;
 }
 </style>
