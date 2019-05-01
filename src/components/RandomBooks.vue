@@ -26,7 +26,7 @@ export default {
   },
 
   mounted() {
-    fetch('http://localhost:8081/books/random').then(res => res.json()).then((res) => {
+    fetch('/books/random').then(res => res.json()).then((res) => {
       this.randomBooks = res.slice();
     });
   },
@@ -41,7 +41,7 @@ div#Random {
     width: 100%;
     position: relative;
     padding: 40px 50px;
-    margin: 0;
+    margin: 40px 0px;
     justify-content: space-evenly;
     flex-wrap: wrap;
     align-content: center;
@@ -78,6 +78,7 @@ div.content {
     position: relative;
     text-align: left;
     text-transform: capitalize;
+    background-color: #f7f7f7;
 }
 div.content * {
     padding: 0;
@@ -87,6 +88,7 @@ div.content h2 {
     padding: 2.5px 0;
     font-size: 16px;
     font-size: 500;
+    line-height: 1.5;
 }
 div.content h3 {
     font-size: 14px;
@@ -96,14 +98,17 @@ div.content div {
     padding: 7.5px 0px;
 }
 div.content div p {
-    font-weight: 400;
-    font-size: 14px;
+    /* font-weight: 400; */
+    /* font-size: 14px; */
+    line-height: 1.5;
+    letter-spacing: -.00278rem;
+    font-size: 1rem;
 }
 div.content div p span {
     background-color: #008000;
     color: #ffffff;
-    padding: 0.5px 7.5px;
-    border-radius: 50%;
+    padding: 1.5px 7.5px;
+    border-radius: 30%;
 }
 
 </style>
