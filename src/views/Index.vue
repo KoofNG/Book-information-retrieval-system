@@ -40,6 +40,16 @@ export default {
       this.$router.push();
     },
   },
+
+  mounted() {
+    var user = window.localStorage.getItem('user');
+    if (!user) {
+      this.$router.push('/');
+    } else {
+      // console.log(JSON.parse(user));
+      return true;
+    }
+  },
 };
 
 </script>
@@ -105,7 +115,7 @@ div.questionRow > form > button {
 }
 
 div#footer{
-  position: relative;
+  position: fixed;
   bottom: 0px !important;
 }
 
