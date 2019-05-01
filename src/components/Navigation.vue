@@ -13,8 +13,10 @@
           <ul>
             <li><router-link to="/Home">Home</router-link></li>
             <li><router-link to="/search">Search</router-link></li>
-            <li><router-link to="/createBook">Create Book</router-link></li>
-            <!-- <li><router-link to="/updateBook">Update Book</router-link></li> -->
+            <li v-if="allowAdmins"><router-link to="/createBook">Create Book</router-link></li>
+            <li><router-link to="/viewRequest">View Request Book</router-link></li>
+            <!-- <li><router-link to="#" @click="logout">Logout</router-link></li> -->
+            <li><button @click="logout">Logout</button></li>
           </ul>
       </div>
     </div>
@@ -26,6 +28,7 @@
 export default {
   data() {
     return {
+      allowAdmins: Boolean,
     };
   },
   methods: {
@@ -33,6 +36,24 @@ export default {
       const menu = document.querySelector('#menus');
       menu.classList.toggle('active');
     },
+
+    logout : function (event) {
+      event.preventDefault();
+      const user = window.localStorage.getItem('user');
+      if (user) {
+        window.localStorage.removeItem('user');
+        this.$router.push('/');
+      }
+    }
+  },
+
+  mounted: function () {
+    const user = (JSON.parse(window.localStorage.getItem("user")));
+    if ((user.status) === 'student' || (user.status) === 'staff') {
+      this.allowAdmins = false;
+    } else {
+      this.allowAdmins = true;
+    }
   },
 };
 </script>
@@ -80,7 +101,8 @@ div.links ul li {
   height: 40px;
   display: block;
 }
-div.links ul li a{
+div.links ul li a,
+div.links ul li button{
   height: 100%;
   width: 100%;
   display: block;
@@ -92,7 +114,13 @@ div.links ul li a{
   color: #ffffff;
   transition: all 0.3s;
 }
-div.links ul li a:hover {
+div.links ul li button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+div.links ul li a:hover,
+div.links ul li button:hover {
   padding-right: 15px;
   background-color: #fff;
   color: #008000;
