@@ -148,21 +148,21 @@ export default {
               loader.classList.remove('active');
               return this.$router.push('/Home');
             })
-            .catch((error) => {return console.log('Error:', error)});
+            .catch(error => console.log('Error:', error));
         }
       }
     },
   },
 
   mounted() {
-    var user = window.localStorage.getItem('user');
+    const user = window.localStorage.getItem('user');
     console.log(this);
     if (!user) {
       this.$router.push('/');
     } else {
-    fetch('/books/categories')
-      .then((res) => {return res.json()})
-      .then((res) => {return this.categories = res.slice()});
+      fetch('/books/categories')
+        .then(res => res.json())
+        .then(res => this.categories = res.slice());
     }
   },
 };

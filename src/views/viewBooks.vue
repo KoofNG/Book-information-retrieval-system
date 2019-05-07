@@ -30,55 +30,54 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";
+import Navigation from '@/components/Navigation.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   components: {
     Navigation,
-    Footer
+    Footer,
   },
 
   data() {
     return {
-      childrenBooks: []
+      childrenBooks: [],
     };
   },
 
   methods: {
-      requestBook: function (id) {
-      var user = JSON.parse(window.localStorage.getItem('user'));
-      var userID = user._id;
-      var  userName = user.username;
-      fetch("/requests/addRequest", {
-        method: "POST",
+    requestBook(id) {
+      const user = JSON.parse(window.localStorage.getItem('user'));
+      const userID = user._id;
+      const userName = user.username;
+      fetch('/requests/addRequest', {
+        method: 'POST',
         headers: {
-          "Content-Type":"application/json"
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId : userID,
-          requesterName : userName,
+          userId: userID,
+          requesterName: userName,
           bookId: id,
-        })
+        }),
       })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        window.localStorage.setItem('user', JSON.stringify(res))
-        alert('Book as being requested');
-      });
-      }
+        .then(res => res.json())
+        .then((res) => {
+          window.localStorage.setItem('user', JSON.stringify(res));
+          alert('Book as being requested');
+        });
+    },
   },
 
   mounted() {
     const bookId = this.$route.params.id;
-    fetch(`/books//children/${bookId}`)
+    fetch(`/books/children/${bookId}`)
       .then(res => res.json())
-      .then(res => {
+      .then((res) => {
         this.childrenBooks = res.slice();
+        console.log(this.childrenBooks);
       });
-  }
+  },
 };
 </script>
 
@@ -108,4 +107,3 @@ export default {
     position: relative;
 }
 </style>
-

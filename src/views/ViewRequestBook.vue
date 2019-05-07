@@ -20,62 +20,60 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
-import Footer from "@/components/Footer.vue";
+import Navigation from '@/components/Navigation.vue';
+import Footer from '@/components/Footer.vue';
+
 export default {
   components: {
     Navigation,
-    Footer
+    Footer,
   },
 
   data() {
     return {
       isAdmin: false,
       isActive: false,
-      requestArray: []
+      requestArray: [],
     };
   },
 
   created() {
-      var user = JSON.parse(window.localStorage.getItem('user'))
-      if (user.status == "admin") {
-          this.isAdmin = true;
-          fetch("/requests")
-            .then(res=>res.json())
-            .then(res=>{
-                console.log(res)
-                this.requestArray = res.slice();
-            })
-      } else {
-            const requestsInfo=[]
-            for(let bookId of user.bookRequests){
-                console.log(bookId)
-                fetch(`/requests/one/${bookId}`)
-                  .then(res => res.json())
-                  .then(res=>{
-                    this.requestArray.push(JSON.parse(JSON.stringify(res)));
-                  })
-              }
-            
+    const user = JSON.parse(window.localStorage.getItem('user'));
+    if (user.status == 'admin') {
+      this.isAdmin = true;
+      fetch('/requests')
+        .then(res => res.json())
+        .then((res) => {
+          console.log(res);
+          this.requestArray = res.slice();
+        });
+    } else {
+      const requestsInfo = [];
+      for (const bookId of user.bookRequests) {
+        console.log(bookId);
+        fetch(`/requests/one/${bookId}`)
+          .then(res => res.json())
+          .then((res) => {
+            this.requestArray.push(JSON.parse(JSON.stringify(res)));
+          });
       }
-
-    
+    }
   },
 
   methods: {
-    approveBook: function(id) {
-        console.log(id);
-        fetch(`/requests/approveRequest/${id}`).
-        then(res=> res.json())
-        .then(res => {
-            if (res.status != "sucessful") {
-                alert('Error occured while approving the book')
-            } else {
-                alert('Book Approved')
-            }
-        })
-    }
-  }
+    approveBook(id) {
+      console.log(id);
+      fetch(`/requests/approveRequest/${id}`)
+        .then(res => res.json())
+        .then((res) => {
+          if (res.status != 'sucessful') {
+            alert('Error occured while approving the book');
+          } else {
+            alert('Book Approved');
+          }
+        });
+    },
+  },
 };
 </script>
 

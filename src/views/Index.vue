@@ -42,11 +42,10 @@ export default {
   },
 
   mounted() {
-    var user = window.localStorage.getItem('user');
+    const user = window.localStorage.getItem('user');
     if (!user) {
       this.$router.push('/');
     } else {
-      // console.log(JSON.parse(user));
       return true;
     }
   },

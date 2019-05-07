@@ -122,7 +122,7 @@ export default {
   },
 
   mounted() {
-    var user = window.localStorage.getItem('user');
+    const user = window.localStorage.getItem('user');
     if (!user) {
       this.$router.push('/');
     } else {
@@ -140,9 +140,9 @@ export default {
       fetch('/books/categories')
         .then(res => res.json())
         .then(res => this.categories = res.slice());
-        return true;
-      }    
-   },
+      return true;
+    }
+  },
 };
 </script>
 

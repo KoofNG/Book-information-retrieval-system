@@ -54,7 +54,7 @@
               </div>
               <div>
                 <select name="category" id v-model="regCategory">
-                  <option value="0" disabled>Choose User Category</option>
+                  <option value disabled>Choose User Category</option>
                   <option value="student">Student</option>
                   <option value="staff">Staff</option>
                 </select>
@@ -70,9 +70,7 @@
 
     <div id="footer" class="footer-color">
       <h6>
-        Made with
-        <span>&#10084;</span> by
-        <a href="http://">Ibrahim Abiodun</a>
+        &copy; 2019
       </h6>
     </div>
   </div>
@@ -80,6 +78,7 @@
 
 <script>
 import Loader from "@/components/Loader.vue";
+
 export default {
   components: {
     Loader
@@ -115,7 +114,7 @@ export default {
   },
 
   methods: {
-    login : function () {
+    login() {
       this.authenticating = true;
       if (this.logEmail !== "" && this.logPassword !== "") {
         fetch("/users/login", {
@@ -125,22 +124,22 @@ export default {
           },
           body: JSON.stringify({
             username: this.logEmail,
-            password: this.logPassword,
+            password: this.logPassword
           })
         })
-          .then((res)=>res.json())
-          .then((res) => {
+          .then(res => res.json())
+          .then(res => {
             const user = res;
             if (res.message === "invalid password") {
-              alert('Incorrect Password');
+              alert("Incorrect Password");
             } else if (res.message === "unknown user") {
-              alert('This account doesnt exist');
+              alert("This account doesnt exist");
             } else {
-              window.localStorage.setItem('user', JSON.stringify(user));
+              window.localStorage.setItem("user", JSON.stringify(user));
               this.$router.push("/Home");
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       } else {
@@ -148,32 +147,39 @@ export default {
       }
     },
 
-    signup: function () {
+    signup() {
       if (
         this.regEmail !== "" &&
-        this.regPassword !== "" 
+        this.regPassword !== "" &&
+        this.regCategory !== ""
       ) {
         // this.$router.push("/Home");
-        fetch ('/users/register', {
+        fetch("/users/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            "username" : this.regEmail,
-            "password" : this.regPassword,
-            "status" : this.regCategory || "admin",
-          }),
+            username: this.regEmail,
+            password: this.regPassword,
+            status: this.regCategory
+          })
         })
-        .then((res) => res.json())
-        .then((res) => {
-          const user = res;
-          window.localStorage.setItem('user', JSON.stringify(user));
-          this.$router.push("/Home");
-        })
-        .catch((err) => {
-          alert('An error occured while creating an account');
-        })
+          .then(res => res.json())
+          .then(res => {
+            const user = res;
+            window.localStorage.setItem("user", JSON.stringify(user));
+            this.$router.push("/Home");
+          })
+          .catch(err => {
+            alert("An error occured while creating an account");
+          });
+      } else if (
+        this.regEmail == "" ||
+        this.regPassword == "" ||
+        this.regCategory == ""
+      ) {
+        alert("All fields are required here");
       } else {
         this.$router.push("/");
       }

@@ -37,18 +37,18 @@ export default {
       menu.classList.toggle('active');
     },
 
-    logout : function (event) {
+    logout(event) {
       event.preventDefault();
       const user = window.localStorage.getItem('user');
       if (user) {
         window.localStorage.removeItem('user');
         this.$router.push('/');
       }
-    }
+    },
   },
 
-  mounted: function () {
-    const user = (JSON.parse(window.localStorage.getItem("user")));
+  mounted() {
+    const user = (JSON.parse(window.localStorage.getItem('user')));
     if ((user.status) === 'student' || (user.status) === 'staff') {
       this.allowAdmins = false;
     } else {

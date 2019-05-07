@@ -29,24 +29,24 @@
 </template>
 
 <script>
-import Navigation from "@/components/Navigation.vue";
-import Search from "@/components/Search.vue";
-import Footer from "@/components/Footer.vue";
-import Loader from "@/components/Loader.vue";
+import Navigation from '@/components/Navigation.vue';
+import Search from '@/components/Search.vue';
+import Footer from '@/components/Footer.vue';
+import Loader from '@/components/Loader.vue';
 
 export default {
   components: {
     Navigation,
     Search,
     Loader,
-    Footer
+    Footer,
   },
 
   data() {
     return {
       isActive: false,
       isAdmin: Boolean,
-      searchResult: []
+      searchResult: [],
     };
   },
 
@@ -56,34 +56,32 @@ export default {
     },
 
 
-    viewChildren: function (itemID) {
+    viewChildren(itemID) {
       this.$router.push({ path: `/viewBooks/${itemID}` });
     },
 
-    requestBook: function(id, event) {
-      var user = JSON.parse(window.localStorage.getItem('user'));
+    requestBook(id, event) {
+      const user = JSON.parse(window.localStorage.getItem('user'));
 
-      var userID = user._id;
-      var  userName = user.username;
-      fetch("/requests/addRequest", {
-        method: "POST",
+      const userID = user._id;
+      const userName = user.username;
+      fetch('/requests/addRequest', {
+        method: 'POST',
         headers: {
-          "Content-Type":"application/json"
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId : userID,
-          requesterName : userName,
+          userId: userID,
+          requesterName: userName,
           bookId: id,
-        })
+        }),
       })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        window.localStorage.setItem('user', JSON.stringify(res))
-        alert('Book as being requested');
-        console.log(res);
-      });
+        .then(res => res.json())
+        .then((res) => {
+          window.localStorage.setItem('user', JSON.stringify(res));
+          alert('Book as being requested');
+          console.log(res);
+        });
     },
 
     editBook(id) {
@@ -92,37 +90,37 @@ export default {
     bookDelete(id) {
       fetch(`/books/remove/${id}`)
         .then(res => res.json())
-        .then(res => {
-          if (res.status === "unsuccesful") {
-            alert("Book not deleted");
+        .then((res) => {
+          if (res.status === 'unsuccesful') {
+            alert('Book not deleted');
           } else {
-            alert("Book deleted");
+            alert('Book deleted');
             this.searchResult = this.searchResult.filter(
-              result => result._id !== id
+              result => result._id !== id,
             );
           }
         })
         .catch(() => {
-          alert("Book not Deleted");
+          alert('Book not Deleted');
         });
       // console.log(id)
-    }
+    },
   },
 
   mounted() {
-    var user = window.localStorage.getItem("user");
+    const user = window.localStorage.getItem('user');
     if (!user) {
-      this.$router.push("/");
+      this.$router.push('/');
     } else {
       const euser = JSON.parse(user);
-      if (euser.status === "student" || euser.status === "staff") {
+      if (euser.status === 'student' || euser.status === 'staff') {
         this.isAdmin = false;
       } else {
         this.isAdmin = true;
       }
       return true;
     }
-  }
+  },
 };
 </script>
 
