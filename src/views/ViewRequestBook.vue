@@ -138,7 +138,7 @@ div.actions {
   width: 25%;
   height: 100%;
   padding: 10px;
-  positin: relative;
+  position: relative;
   margin: 0px;
 }
 div.actions button {
@@ -156,7 +156,5 @@ div.actions button {
 }
 
 #footer {
-  position: fixed !important;
-  margin-top: 40px;
 }
 </style>

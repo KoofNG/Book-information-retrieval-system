@@ -9,7 +9,7 @@
         <h6>{{item.edition}}</h6>
         <h3>STATUS:<b v-if="item.requested == false">Available</b><b v-else>Not Available</b></h3>
         <div><button v-if="item.requested != true" @click="decide" id="request">request for this book</button></div>
-        
+
         <div v-if="decided" ref="bookAlert" id="alert">
           <p>Are you sure you want to borrow this Book?</p>
           <div class="btn-group">
@@ -29,6 +29,7 @@
 <script>
 import Navigation from '@/components/Navigation.vue';
 import Footer from '@/components/Footer.vue';
+
 export default {
   components: {
     Navigation,
@@ -38,16 +39,16 @@ export default {
   data() {
     return {
       childrenBooks: [],
-      decided: false
+      decided: false,
     };
   },
 
-  methods: {  
-    decide: function () {
+  methods: {
+    decide() {
       this.decided = true;
     },
 
-    noBorrow: function (event) {
+    noBorrow(event) {
       this.decided = false;
     },
     requestBook(id) {
@@ -73,7 +74,7 @@ export default {
         .then(this.decided = false);
     },
   },
-  
+
   mounted() {
     const bookId = this.$route.params.id;
     fetch(`/books/children/${bookId}`)
@@ -147,5 +148,14 @@ button#no {
     width: 100%;
     height: auto;
     position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  div.wr {
+    padding: 20px;
+  }
+  .wr > div#book-search-result-card {
+    width: 100%;
+  }
 }
 </style>

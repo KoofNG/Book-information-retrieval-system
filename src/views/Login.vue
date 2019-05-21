@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="mainWrap">
     <div class="alert">
       <p v-text="msg"></p>
     </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="user-forms">
-          <Loader v-if="authenticating"/>
+          <Loader v-bind:class="{ active: authenticating }"/>
           <div id="login" class="active">
             <h1>Login</h1>
             <form name="login" v-on:submit.prevent>
@@ -82,114 +82,115 @@
 </template>
 
 <script>
-import Loader from "@/components/Loader.vue";
+import Loader from '@/components/Loader.vue';
+
 export default {
   components: {
-    Loader
+    Loader,
   },
 
   data() {
     return {
-      logEmail: "",
-      logPassword: "",
-      regEmail: "",
-      regPassword: "",
-      regCategory: "",
-      msg: "",
-      authenticating: false
+      logEmail: '',
+      logPassword: '',
+      regEmail: '',
+      regPassword: '',
+      regCategory: '',
+      msg: '',
+      authenticating: false,
     };
   },
 
   mounted() {
-    const chooseForm = document.querySelectorAll("div.links div p");
+    const chooseForm = document.querySelectorAll('div.links div p');
     for (let index = 0; index < chooseForm.length; index++) {
       const element = chooseForm[index];
-      element.addEventListener("click", e => {
-        const activeLink = document.querySelector("p.active");
-        activeLink.classList.remove("active");
-        element.classList.add("active");
+      element.addEventListener('click', (e) => {
+        const activeLink = document.querySelector('p.active');
+        activeLink.classList.remove('active');
+        element.classList.add('active');
         const route = e.target.id;
         const currentActive = document.querySelector(
-          "div.user-forms div.active"
+          'div.user-forms div.active',
         );
-        currentActive.classList.remove("active");        
-        if (this.authenticating === true){this.authenticating = false}
-        document.querySelector(`div#${route}`).classList.add("active");
+        currentActive.classList.remove('active');
+        if (this.authenticating === true) { this.authenticating = false; }
+        document.querySelector(`div#${route}`).classList.add('active');
       });
     }
   },
 
   methods: {
-    showAlert: function (message) {
+    showAlert(message) {
       const alert = document.querySelector('.alert');
       alert.classList.add('active');
-        this.msg = message;
-        setTimeout(() => {
-          alert.classList.remove('active');
-        }, 1000);
+      this.msg = message;
+      setTimeout(() => {
+        alert.classList.remove('active');
+      }, 1500);
     },
 
-    login: function () {
-      if (this.logEmail != "" && this.logPassword != ""){
+    login() {
+      if (this.logEmail != '' && this.logPassword != '') {
         this.authenticating = true;
-        fetch("/users/login", {
-          method: "POST",
+        fetch('/users/login', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             username: this.logEmail,
-            password: this.logPassword
+            password: this.logPassword,
+          }),
+        })
+          .then(res => res.json())
+          .then((res) => {
+            const user = res;
+            if (res.message === 'invalid password') {
+              this.showAlert('Incorrect Password');
+              this.authenticating = false;
+            } else if (res.message === 'unknown user') {
+              this.showAlert('This account doesnt exist');
+              this.authenticating = false;
+            } else {
+              window.localStorage.setItem('user', JSON.stringify(user));
+              this.authenticating = false;
+              this.$router.push('/Home');
+            }
           })
-        })
-        .then((res)=>res.json())
-        .then(res => {
-          const user = res;
-          if (res.message === "invalid password") {
-            this.showAlert("Incorrect Password");            
-            this.authenticating = false;            
-          } else if (res.message === "unknown user") {
-            this.showAlert("This account doesnt exist");
-            this.authenticating = false;
-          } else {
-            window.localStorage.setItem("user", JSON.stringify(user));
-            this.authenticating = false;
-            this.$router.push("/Home");
-          }
-        })
-        .catch(err => this.showAlert(err));
+          .catch(err => this.showAlert(err));
         this.authenticating = false;
       } else {
         this.showAlert('Provide Email and Password');
       }
     },
 
-    signup: function () {
-      if (this.regEmail != "" && this.regPassword != "" && this.regCategory != "") {
+    signup() {
+      if (this.regEmail != '' && this.regPassword != '' && this.regCategory != '') {
         this.authenticating = true;
-        fetch("/users/register", {
-          method: "POST",
+        fetch('/users/register', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             username: this.regEmail,
             password: this.regPassword,
-            status: this.regCategory
+            status: this.regCategory,
+          }),
+        })
+          .then(res => res.json())
+          .then((res) => {
+            const user = res;
+            window.localStorage.setItem('user', JSON.stringify(user));
+            this.authenticating = false;
+            this.$router.push('/Home');
           })
-        })
-        .then(res => res.json())
-        .then(res => {
-          const user = res;
-          window.localStorage.setItem("user", JSON.stringify(user));
-          this.authenticating = false;
-          this.$router.push("/Home");
-        })
-        .catch(err => {
-          this.showAlert("An error occured while creating an account");
-          this.authenticating = false;
-        });
-      } else if (this.regEmail == "" || this.regPassword == "" || this.regCategory == "") {
+          .catch((err) => {
+            this.showAlert('An error occured while creating an account');
+            this.authenticating = false;
+          });
+      } else if (this.regEmail == '' || this.regPassword == '' || this.regCategory == '') {
         this.showAlert('All fields are required here');
         this.authenticating = false;
       } else {
@@ -197,7 +198,7 @@ export default {
       }
     },
 
-  }
+  },
 };
 </script>
 
@@ -229,12 +230,13 @@ div.alert p{
 div#wraps {
   width: 100%;
   display: block;
-  height: calc(100vh - 141.5px);
+  height: auto;
   position: relative;
   background: url("../assets/bgp.jpg");
   background-position: 50% 50%;
   background-size: cover;
   background-repeat: no-repeat;
+  padding: 100px 0px !important;
 }
 div#navigation {
   width: 100%;
@@ -245,10 +247,10 @@ div#navigation {
   margin: 0px;
 }
 div#forms {
-  position: absolute;
+  position: relative;
   display: block;
-  top: 35%;
-  transform: translateY(-35%);
+  /* top: 35%;
+  transform: translateY(-35%); */
   left: 50px;
   width: 450px;
   height: auto;
@@ -269,8 +271,9 @@ div#footer {
   display: flex;
   justify-content: center;
   align-content: center;
-  position: absolute;
+  position: relative;
   bottom: 0;
+  margin-top: 0px !important;
 }
 div.brandName {
   display: block;
@@ -414,6 +417,13 @@ input[type="email"] {
   background-color: #008000;
 }
 
+div#mainWrap {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
 
 @media screen and (max-width: 767px) {
   div#navigation {
@@ -427,9 +437,9 @@ input[type="email"] {
   }
 
   div#wraps{
-    padding: 0px 10px;
-    height: 100vh;
-    position: fixed;
+    padding: 100px 10px !important;
+    height: auto;
+    position: relative;
   }
 
   div#forms {
@@ -442,7 +452,7 @@ input[type="email"] {
     width: 100%;
     height: 45px;
     position: relative;
-    margin-top: 20px;
+    margin-top: 0px;
   }
   div#footer h6{
     font-size: 1rem;

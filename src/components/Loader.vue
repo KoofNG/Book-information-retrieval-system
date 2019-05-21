@@ -23,11 +23,11 @@ div#loader {
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
     z-index: 1000;
+    display: none;
+}
+div#loader.active{
     display: block;
 }
-/* div#loader.active{
-    display: block;
-} */
 @-webkit-keyframes spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }

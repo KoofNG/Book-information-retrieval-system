@@ -59,7 +59,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 div#menus{
   height: auto;
   width: 180px;
@@ -138,13 +138,6 @@ div#navigation {
   padding-right: 50px;
   position: relative;
 }
-@media screen and (max-width: 376px) {
-  div#navigation {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-}
 div.brandName {
   height: 100%;
   width: auto;
@@ -185,5 +178,37 @@ div.pad-top-bottom {
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+
+@media screen and (max-width: 376px) {
+  div#navigation {
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 60px;;
+  }
+
+  div#menus{
+    height: auto;
+    width: 100%;
+    padding: 20px 10px;
+    background-color: #008000;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: 60px;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: .2s all linear;
+    overflow: hidden;
+    z-index: 1000;
+  }
+
+  div.links ul li a,
+  div.links ul li button {
+    text-align: left;
+  }
+
 }
 </style>

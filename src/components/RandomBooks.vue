@@ -111,4 +111,14 @@ div.content div p span {
     border-radius: 30%;
 }
 
+@media screen and (max-width: 767px) {
+    div#Random {
+        padding: 0px 20px;
+        margin-bottom: 20px;
+    }
+    div#bookCard {
+        width: 100%;
+    }
+}
+
 </style>

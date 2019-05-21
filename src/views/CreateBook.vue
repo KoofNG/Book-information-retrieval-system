@@ -168,7 +168,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style>
 div#wraps {
   width: 100%;
   display: flex;

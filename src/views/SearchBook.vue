@@ -12,7 +12,7 @@
             <h5>{{item.author}}</h5>
             <h6>{{new Date(item.publicationYear).getFullYear()}}</h6>
             <h6>{{item.edition}}</h6>
-            <p class="forClick" @click="viewChildren(item._id)">Quantity Available:<span id="availability">{{item.quantity}}</span></p>
+            <p class="forClick" @click="viewChildren(item._id)">See quantities available ({{item.quantity}}) </p>
             <div v-if="isAdmin">
               <button id="edit" @click="editBook(item._id)">edit</button>
               <button id="delete" @click="bookDelete(item._id)">delete</button>
@@ -110,6 +110,10 @@ export default {
       this.$router.push('/');
     } else {
       const euser = JSON.parse(user);
+      const loader = document.querySelector('#loader');
+      if (loader) {
+        loader.classList.remove('active');
+      }
       if (euser.status === 'student' || euser.status === 'staff') {
         this.isAdmin = false;
       } else {
@@ -124,9 +128,9 @@ export default {
 <style>
 p.forClick{
   padding: 10px;
-  color: #cccccc;
-  background-color: #008000;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1.2em;
 }
 span#availability {
   padding: 2px 7.5px !important;
@@ -231,7 +235,20 @@ div#book-search-result-card:nth-child(even) {
 }
 
 #footer {
-  position: fixed !important;
-  margin-top: 40px;
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  div#search-w {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+  div#search-result {
+    margin: 10px 0px;
+  }
+  div.result {
+    padding: 0px 20px !important;
+  }
 }
 </style>

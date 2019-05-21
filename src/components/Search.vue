@@ -168,4 +168,17 @@ div#search-form > form > div > button {
   font-size: 14px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 767px) {
+
+  div#search-form {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #eee;
+  }
+
+  div#search-form > form select#set {
+    margin-bottom: 7.5px !important;
+  }
+}
 </style>

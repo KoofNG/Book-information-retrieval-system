@@ -114,8 +114,15 @@ div.questionRow > form > button {
 }
 
 div#footer{
-  position: fixed;
-  bottom: 0px !important;
+  position: relative;
+  bottom: 0px;
+}
+
+@media screen and (max-width:767px){
+  div.searchBox {
+    height: 250px;
+    padding: 40px 20px;
+  }
 }
 
 </style>
