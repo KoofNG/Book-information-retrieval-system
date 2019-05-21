@@ -12,13 +12,10 @@
             <h5>{{item.author}}</h5>
             <h6>{{new Date(item.publicationYear).getFullYear()}}</h6>
             <h6>{{item.edition}}</h6>
-            <p @click="viewChildren(item._id)">
-              Quantity Available:
-              <span id="availability">{{item.quantity}}</span>
-            </p>
-            <div>
-              <button v-if="isAdmin" id="edit" @click="editBook(item._id)">edit</button>
-              <button v-if="isAdmin" id="delete" @click="bookDelete(item._id)">delete</button>
+            <p class="forClick" @click="viewChildren(item._id)">Quantity Available:<span id="availability">{{item.quantity}}</span></p>
+            <div v-if="isAdmin">
+              <button id="edit" @click="editBook(item._id)">edit</button>
+              <button id="delete" @click="bookDelete(item._id)">delete</button>
             </div>
           </div>
         </div>
@@ -125,6 +122,12 @@ export default {
 </script>
 
 <style>
+p.forClick{
+  padding: 10px;
+  color: #cccccc;
+  background-color: #008000;
+  cursor: pointer;
+}
 span#availability {
   padding: 2px 7.5px !important;
   margin: 0 7.5px;
