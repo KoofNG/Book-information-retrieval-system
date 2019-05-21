@@ -158,6 +158,7 @@ export default {
           }
         })
         .catch(err => this.showAlert(err));
+        this.authenticating = false;
       } else {
         this.showAlert('Provide Email and Password');
       }
@@ -195,7 +196,7 @@ export default {
         this.$router.push('/');
       }
     },
-    
+
   }
 };
 </script>
