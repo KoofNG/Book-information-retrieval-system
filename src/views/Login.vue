@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="alert">
+      <p v-text="msg"></p>
+    </div>
+
     <div id="navigation" class="navigation-color">
       <div class="brandName">
         <a href="/">Book Information Retrieval System</a>
@@ -73,12 +77,12 @@
         &copy; 2019
       </h6>
     </div>
+
   </div>
 </template>
 
 <script>
 import Loader from "@/components/Loader.vue";
-
 export default {
   components: {
     Loader
@@ -91,6 +95,7 @@ export default {
       regEmail: "",
       regPassword: "",
       regCategory: "",
+      msg: "",
       authenticating: false
     };
   },
@@ -107,16 +112,26 @@ export default {
         const currentActive = document.querySelector(
           "div.user-forms div.active"
         );
-        currentActive.classList.remove("active");
+        currentActive.classList.remove("active");        
+        if (this.authenticating === true){this.authenticating = false}
         document.querySelector(`div#${route}`).classList.add("active");
       });
     }
   },
 
   methods: {
-    login() {
-      this.authenticating = true;
-      if (this.logEmail !== "" && this.logPassword !== "") {
+    showAlert: function (message) {
+      const alert = document.querySelector('.alert');
+      alert.classList.add('active');
+        this.msg = message;
+        setTimeout(() => {
+          alert.classList.remove('active');
+        }, 1000);
+    },
+
+    login: function () {
+      if (this.logEmail != "" && this.logPassword != ""){
+        this.authenticating = true;
         fetch("/users/login", {
           method: "POST",
           headers: {
@@ -127,33 +142,30 @@ export default {
             password: this.logPassword
           })
         })
-          .then(res => res.json())
-          .then(res => {
-            const user = res;
-            if (res.message === "invalid password") {
-              alert("Incorrect Password");
-            } else if (res.message === "unknown user") {
-              alert("This account doesnt exist");
-            } else {
-              window.localStorage.setItem("user", JSON.stringify(user));
-              this.$router.push("/Home");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        .then((res)=>res.json())
+        .then(res => {
+          const user = res;
+          if (res.message === "invalid password") {
+            this.showAlert("Incorrect Password");            
+            this.authenticating = false;            
+          } else if (res.message === "unknown user") {
+            this.showAlert("This account doesnt exist");
+            this.authenticating = false;
+          } else {
+            window.localStorage.setItem("user", JSON.stringify(user));
+            this.authenticating = false;
+            this.$router.push("/Home");
+          }
+        })
+        .catch(err => this.showAlert(err));
       } else {
-        this.$router.push("/");
+        this.showAlert('Provide Email and Password');
       }
     },
 
-    signup() {
-      if (
-        this.regEmail !== "" &&
-        this.regPassword !== "" &&
-        this.regCategory !== ""
-      ) {
-        // this.$router.push("/Home");
+    signup: function () {
+      if (this.regEmail != "" && this.regPassword != "" && this.regCategory != "") {
+        this.authenticating = true;
         fetch("/users/register", {
           method: "POST",
           headers: {
@@ -165,30 +177,53 @@ export default {
             status: this.regCategory
           })
         })
-          .then(res => res.json())
-          .then(res => {
-            const user = res;
-            window.localStorage.setItem("user", JSON.stringify(user));
-            this.$router.push("/Home");
-          })
-          .catch(err => {
-            alert("An error occured while creating an account");
-          });
-      } else if (
-        this.regEmail == "" ||
-        this.regPassword == "" ||
-        this.regCategory == ""
-      ) {
-        alert("All fields are required here");
+        .then(res => res.json())
+        .then(res => {
+          const user = res;
+          window.localStorage.setItem("user", JSON.stringify(user));
+          this.authenticating = false;
+          this.$router.push("/Home");
+        })
+        .catch(err => {
+          this.showAlert("An error occured while creating an account");
+          this.authenticating = false;
+        });
+      } else if (this.regEmail == "" || this.regPassword == "" || this.regCategory == "") {
+        this.showAlert('All fields are required here');
+        this.authenticating = false;
       } else {
-        this.$router.push("/");
+        this.$router.push('/');
       }
-    }
+    },
+    
   }
 };
 </script>
 
 <style scoped>
+div.alert {
+  width: 100%;
+  position: absolute;
+  margin: 0px;
+  background-color: #fd3916;
+  padding: 7.5px 0px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  top: -40px;
+  opacity: 0;
+  transition: all 300ms;
+}
+div.alert.active{
+  top: 60px;
+  opacity: 1;
+  z-index: 3;
+}
+div.alert p{
+  margin: 0px;
+  color: #121212;
+  font-size: .8em;
+}
 /* Block */
 div#wraps {
   width: 100%;
@@ -376,5 +411,41 @@ input[type="email"] {
 }
 .footer-color {
   background-color: #008000;
+}
+
+
+@media screen and (max-width: 767px) {
+  div#navigation {
+    height: 60px;
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  div.brandName a {
+    font-size: 1.2rem;
+  }
+
+  div#wraps{
+    padding: 0px 10px;
+    height: 100vh;
+    position: fixed;
+  }
+
+  div#forms {
+    width: 100%;
+    left: 0px;
+    position: relative;
+  }
+
+  div#footer {
+    width: 100%;
+    height: 45px;
+    position: relative;
+    margin-top: 20px;
+  }
+  div#footer h6{
+    font-size: 1rem;
+    padding: 12.5px 0;
+  }
 }
 </style>
